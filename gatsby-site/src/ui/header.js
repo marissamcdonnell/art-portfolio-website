@@ -24,8 +24,7 @@ const Header = ({ siteTitle }) => (
           }}
         >
           {siteTitle}
-        </Link>
-            another useless change.
+      </Link>
       </h1>
     </div>
   </div>
