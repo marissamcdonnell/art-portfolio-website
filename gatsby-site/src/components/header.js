@@ -25,7 +25,7 @@ const Header = ({ siteTitle }) => (
         >
           {siteTitle}
         </Link>
-        Jesus
+            another useless change.
       </h1>
     </div>
   </div>
