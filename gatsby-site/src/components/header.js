@@ -25,6 +25,7 @@ const Header = ({ siteTitle }) => (
         >
           {siteTitle}
         </Link>
+        Jesus
       </h1>
     </div>
   </div>
