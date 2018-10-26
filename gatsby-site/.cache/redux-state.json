@@ -708,12 +708,12 @@
       "host": "localhost",
       "pathPrefix": "",
       "polyfill": true,
-      "buildTime": "2018-10-21T03:46:52.020Z",
+      "buildTime": "2018-10-26T05:22:10.022Z",
       "id": "Site",
       "parent": "SOURCE",
       "children": [],
       "internal": {
-        "contentDigest": "b47f39eadb90ce38da8c0711aaf70105",
+        "contentDigest": "ae66edf36f12156186ad10b54b445bbe",
         "type": "Site",
         "owner": "internal-data-bridge"
       }

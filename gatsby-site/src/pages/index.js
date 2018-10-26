@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'gatsby'
 
-<<<<<<< HEAD
 import Body from '../components/body'
 
 import Layout from '../layout'
@@ -15,16 +14,6 @@ const IndexPage = () => (
       <p>Now go build something great.</p>
       <Link to="/page-2/">Go to page 2</Link>
     </div>
-=======
-import Layout from '../layout'
-
-const IndexPage = () => (
-  <Layout>
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <Link to="/page-2/">Go to page 2</Link>
->>>>>>> parent of 4d1be82... more setup
   </Layout>
 )
 
