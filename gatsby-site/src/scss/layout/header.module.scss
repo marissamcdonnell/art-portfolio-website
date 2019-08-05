@@ -1,7 +1,28 @@
-@import "../colors";
+@import '../colors';
+
+.header {
+  display: flex;
+  max-width: 60rem;
+  position: relative;
+  justify-content: space-between;
+  margin: 0 auto 2rem auto;
+}
 
 .headerTitle {
-    margin: 2em;
-    position: relative;
-    left: 18em;
+  margin-left: 21rem;
+}
+
+.nav {
+  display: flex;
+  width: 10rem;
+  justify-content: space-between;
+  color: $blue;
+
+  a {
+    color: $blue;
+    text-decoration: none;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
 }

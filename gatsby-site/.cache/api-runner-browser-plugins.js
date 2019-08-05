@@ -1,7 +1,7 @@
 module.exports = [{
-      plugin: require('/Users/marissa/Sites/art-portfolio-website/gatsby-site/node_modules/gatsby-plugin-offline/gatsby-browser'),
+      plugin: require('/Users/mmcdonnell/Sites/art-portfolio-website/gatsby-site/node_modules/gatsby-plugin-offline/gatsby-browser.js'),
       options: {"plugins":[]},
     },{
-      plugin: require('/Users/marissa/Sites/art-portfolio-website/gatsby-site/gatsby-browser.js'),
+      plugin: require('/Users/mmcdonnell/Sites/art-portfolio-website/gatsby-site/gatsby-browser.js'),
       options: {"plugins":[]},
     }]

@@ -1,32 +1,54 @@
+.body {
+  min-width: 60rem;
+  max-width: 60rem;
+  margin: 0 auto;
+  position: relative;
+}
+
 .pencils {
-    top: 0;
-    width: 40em;
-    left: 0;
-    z-index: -1;
-    position: absolute;
-    width: 30em;
+  position: relative;
+  top: -10rem;
+  width: 30em;
+  z-index: 0;
+  transform: rotate(25deg);
+  &:hover {
+    transform: rotate(10deg);
+    cursor: pointer;
+  }
 }
 
 .paint {
-    width: 29em;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
+  width: 29em;
+  position: relative;
+  top: -9rem;
+  z-index: 0;
+  transform: rotate(81deg);
+  &:hover {
+    transform: rotate(70deg);
+    cursor: pointer;
+  }
 }
 
 .yarn {
-    position: absolute;
-    width: 25em;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
+  position: relative;
+  width: 25rem;
+  top: -20rem;
+  margin-right: 2rem;
+  z-index: 0;
+  &:hover {
+    transform: rotate(12deg);
+    cursor: pointer;
+  }
 }
 
 .sew {
-    position: absolute;
-    right: -116px;
-    width: 30em;
-    top: 0;
-    z-index: -1;
+  position: relative;
+  width: 30rem;
+  top: -7rem;
+  z-index: 0;
+  transform: rotate(-2deg);
+  &:hover {
+    transform: rotate(10deg);
+    cursor: pointer;
+  }
 }
