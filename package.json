@@ -30,7 +30,7 @@
     ]
   },
   "devDependencies": {
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "react-images": "^1.1.0-beta.2",
     "react-photo-gallery": "^8.0.0"
   }
