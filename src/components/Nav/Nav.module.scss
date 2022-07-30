@@ -2,8 +2,12 @@
 
 .container {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex: 2 2 auto;
+  overflow: hidden;
+  li {
+    margin: 0 2rem;
+    list-style: none;
+  }
 
   a {
     text-decoration: none;
@@ -19,4 +23,8 @@
       border-bottom: 2px solid $purple;
     }
   }
+}
+
+.active {
+  color: $purple !important;
 }
