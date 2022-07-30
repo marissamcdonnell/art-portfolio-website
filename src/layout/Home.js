@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import Gallery from 'react-photo-gallery'
-import Carousel, { Modal, ModalGateway } from 'react-images'
+// import Carousel, { Modal, ModalGateway } from 'react-images'
 
 import pic from '../content/images/colorfullymine3.jpg'
 
@@ -8,43 +8,43 @@ const photos = [
   {
     src: pic,
     width: 4,
-    height: 3
+    height: 3,
   },
   {
     src: pic,
     width: 1,
-    height: 1
+    height: 1,
   },
   {
     src: pic,
     width: 4,
-    height: 3
+    height: 3,
   },
   {
     src: pic,
     width: 2,
-    height: 1
+    height: 1,
   },
   {
     src: pic,
     width: 4,
-    height: 3
+    height: 3,
   },
   {
     src: pic,
     width: 2,
-    height: 2
+    height: 2,
   },
   {
     src: pic,
     width: 4,
-    height: 3
+    height: 3,
   },
   {
     src: pic,
     width: 1,
-    height: 1
-  }
+    height: 1,
+  },
 ]
 
 const Home = () => {
@@ -63,20 +63,20 @@ const Home = () => {
   return (
     <>
       <Gallery photos={photos} onClick={openLightbox} />
-      <ModalGateway>
+      {/* <ModalGateway>
         {viewerIsOpen ? (
           <Modal onClose={closeLightbox}>
             <Carousel
               currentIndex={currentImage}
-              views={photos.map(x => ({
+              views={photos.map((x) => ({
                 ...x,
                 srcset: x.srcSet,
-                caption: x.title
+                caption: x.title,
               }))}
             />
           </Modal>
         ) : null}
-      </ModalGateway>
+      </ModalGateway> */}
     </>
   )
 }
