@@ -122,18 +122,25 @@ async function main() {
       const { webpPath, width, height } = await processImage(filePath, tmpDir)
       const blobUrl = await uploadToBlob(webpPath, category)
 
+      // Parse year from filename if it ends in _YYYY (e.g. "still-life_2024.jpg")
+      const yearMatch = basename.match(/_(\d{4})$/)
+      const year = yearMatch ? parseInt(yearMatch[1]) : new Date().getFullYear()
+      const titleBase = basename.replace(/_\d{4}$/, "")
+      const title = titleBase
+        .replace(/[-_]/g, " ")
+        .replace(/\b\w/g, (c) => c.toUpperCase())
       const id = basename.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "")
 
       snippets.push(`  {
     id: "${id}",
-    title: "${basename.replace(/-/g, " ")}",
-    year: ${new Date().getFullYear()},
+    title: "${title}",
+    year: ${year},
     medium: "Oil on canvas",
     dimensions: '??" × ??"',
     blobUrl: "${blobUrl}",
     width: ${width},
     height: ${height},
-    alt: "${basename.replace(/-/g, " ")}",
+    alt: "${title}",
     category: "${categoryMap[category]}",
     featured: false,
   },`)

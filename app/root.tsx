@@ -19,9 +19,8 @@ export const meta: Route.MetaFunction = () => [
   { name: "viewport", content: "width=device-width, initial-scale=1" },
   { property: "og:site_name", content: SITE_NAME },
   { name: "author", content: SITE_NAME },
-  // Prevents search engines indexing placeholder content before real art is up.
-  // Remove this line once your real paintings are uploaded.
-  // { name: "robots", content: "noindex" },
+  // Remove this once your real paintings and bio are fully in place.
+  { name: "robots", content: "noindex, nofollow" },
 ]
 
 export const links: Route.LinksFunction = () => [
