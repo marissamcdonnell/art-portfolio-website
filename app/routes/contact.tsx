@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { data, useFetcher } from "react-router"
 import type { Route } from "./+types/contact"
 import { Button } from "~/components/ui/button"
@@ -7,15 +6,14 @@ import { Textarea } from "~/components/ui/textarea"
 import { Label } from "~/components/ui/label"
 import { Separator } from "~/components/ui/separator"
 import { Mail, Instagram, CheckCircle, AlertCircle } from "lucide-react"
+import { seoMeta } from "~/lib/seo"
 
-export const meta: Route.MetaFunction = () => [
-  { title: "Contact — Marissa McDonnell" },
-  {
-    name: "description",
-    content:
-      "Get in touch with Marissa McDonnell for commissions, inquiries, or just to say hello.",
-  },
-]
+export const meta: Route.MetaFunction = () =>
+  seoMeta({
+    title: "Contact",
+    description: "Get in touch with Marissa McDonnell for commissions, original work inquiries, or just to say hello.",
+    path: "/contact",
+  })
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData()

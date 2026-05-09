@@ -12,6 +12,17 @@ import type { Route } from "./+types/root"
 import stylesheet from "~/app.css?url"
 import { getTheme } from "~/lib/theme.server"
 import { SiteHeader } from "~/components/site-header"
+import { SITE_NAME, SITE_URL, DEFAULT_DESCRIPTION } from "~/lib/seo"
+
+export const meta: Route.MetaFunction = () => [
+  { charSet: "utf-8" },
+  { name: "viewport", content: "width=device-width, initial-scale=1" },
+  { property: "og:site_name", content: SITE_NAME },
+  { name: "author", content: SITE_NAME },
+  // Prevents search engines indexing placeholder content before real art is up.
+  // Remove this line once your real paintings are uploaded.
+  // { name: "robots", content: "noindex" },
+]
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -41,6 +52,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1a1a1a" />
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
         <Meta />
         <Links />
       </head>

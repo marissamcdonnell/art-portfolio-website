@@ -4,15 +4,33 @@ import { getFeaturedArtworks } from "~/lib/artworks"
 import { ArtImage } from "~/components/art-image"
 import { Button } from "~/components/ui/button"
 import { ArrowRight } from "lucide-react"
+import { seoMeta, SITE_URL, SITE_NAME } from "~/lib/seo"
 
-export const meta: Route.MetaFunction = () => [
-  { title: "Marissa McDonnell — Artist" },
-  {
-    name: "description",
-    content:
-      "Oil painter and mixed-media artist based in the United States. Expressive, layered work exploring color and light.",
-  },
-]
+export const meta: Route.MetaFunction = ({ data }) => {
+  const firstImage = data?.featured?.[0]?.blobUrl
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: SITE_NAME,
+    url: SITE_URL,
+    jobTitle: "Artist",
+    description: "Oil painter and mixed-media artist.",
+    sameAs: [
+      "https://www.instagram.com/",
+    ],
+  }
+
+  return [
+    ...seoMeta({
+      title: "Marissa McDonnell — Artist",
+      description:
+        "Oil painter and mixed-media artist. Expressive, layered work exploring color, light, and the quiet in-between.",
+      image: firstImage,
+      path: "/",
+    }),
+    { "script:ld+json": jsonLd },
+  ]
+}
 
 export function loader() {
   const featured = getFeaturedArtworks(3)

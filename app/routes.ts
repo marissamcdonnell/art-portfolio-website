@@ -7,4 +7,6 @@ export default [
   route("other-arts", "routes/other-arts.tsx"),
   route("contact", "routes/contact.tsx"),
   route("api/theme", "routes/api.theme.tsx"),
+  route("sitemap.xml", "routes/sitemap[.xml].tsx"),
+  route("robots.txt", "routes/robots[.txt].tsx"),
 ] satisfies RouteConfig

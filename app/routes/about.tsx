@@ -1,13 +1,13 @@
 import type { Route } from "./+types/about"
 import { Separator } from "~/components/ui/separator"
+import { seoMeta } from "~/lib/seo"
 
-export const meta: Route.MetaFunction = () => [
-  { title: "About — Marissa McDonnell" },
-  {
-    name: "description",
-    content: "Learn about Marissa McDonnell, oil painter and mixed-media artist.",
-  },
-]
+export const meta: Route.MetaFunction = () =>
+  seoMeta({
+    title: "About",
+    description: "Learn about Marissa McDonnell — oil painter, mixed-media artist, and her process.",
+    path: "/about",
+  })
 
 export default function About() {
   return (
