@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { cn } from "~/lib/utils"
 
 type ArtImageProps = {
@@ -13,10 +13,21 @@ type ArtImageProps = {
 
 export function ArtImage({ src, alt, width, height, className, priority, onClick }: ArtImageProps) {
   const [loaded, setLoaded] = useState(false)
+  const [useOriginal, setUseOriginal] = useState(false)
+  const imgRef = useRef<HTMLImageElement>(null)
+
+  // If the image finished (or failed) before React hydrated, onLoad/onError
+  // never fire. Check once on mount so it doesn't stay stuck at opacity-0.
+  useEffect(() => {
+    const img = imgRef.current
+    if (!img?.complete) return
+    if (img.naturalWidth > 0) setLoaded(true)
+    else setUseOriginal(true)
+  }, [])
 
   // Build a Vercel Image Optimization URL for Blob-hosted images
   // Falls back to the raw src for external images (like Unsplash placeholders)
-  const optimizedSrc = src.includes("vercel-storage.com") || src.includes("blob.vercel-storage.com")
+  const optimizedSrc = !useOriginal && src.includes("vercel-storage.com")
     ? `/_vercel/image?url=${encodeURIComponent(src)}&w=1200&q=85`
     : src
 
@@ -36,6 +47,7 @@ export function ArtImage({ src, alt, width, height, className, priority, onClick
         />
       )}
       <img
+        ref={imgRef}
         src={optimizedSrc}
         alt={alt}
         width={width}
@@ -43,6 +55,8 @@ export function ArtImage({ src, alt, width, height, className, priority, onClick
         loading={priority ? "eager" : "lazy"}
         decoding="async"
         onLoad={() => setLoaded(true)}
+        // If the optimizer request fails, fall back to the original image
+        onError={() => setUseOriginal(true)}
         className={cn(
           "h-full w-full object-cover transition-opacity duration-500",
           loaded ? "opacity-100" : "opacity-0",
