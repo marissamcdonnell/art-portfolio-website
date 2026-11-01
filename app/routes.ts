@@ -5,6 +5,7 @@ export default [
   route("about", "routes/about.tsx"),
   route("oil-paintings", "routes/oil-paintings.tsx"),
   route("other-arts", "routes/other-arts.tsx"),
+  route("engineering", "routes/engineering.tsx"),
   route("contact", "routes/contact.tsx"),
   route("api/theme", "routes/api.theme.tsx"),
   route("sitemap.xml", "routes/sitemap[.xml].tsx"),

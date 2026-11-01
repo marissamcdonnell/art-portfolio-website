@@ -13,7 +13,7 @@ export const meta: Route.MetaFunction = ({ data }) => {
     "@type": "Person",
     name: SITE_NAME,
     url: SITE_URL,
-    jobTitle: "Artist",
+    jobTitle: ["Artist", "Software Engineer"],
     description: "Oil painter and mixed-media artist.",
     sameAs: [
       "https://www.instagram.com/",
@@ -22,7 +22,7 @@ export const meta: Route.MetaFunction = ({ data }) => {
 
   return [
     ...seoMeta({
-      title: "Marissa McDonnell — Artist",
+      title: "Marissa McDonnell — Artist and Software Engineer",
       description:
         "Oil painter and mixed-media artist. Expressive, layered work exploring color, light, and the quiet in-between.",
       image: firstImage,
@@ -46,7 +46,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
       <section className="relative flex min-h-[70vh] flex-col items-center justify-center overflow-hidden px-4 py-24 text-center sm:px-6">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-muted/40 via-background to-background" />
         <p className="mb-4 text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">
-          Artist & Painter
+          Artist & Software Engineer
         </p>
         <h1 className="mb-6 max-w-3xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl md:text-6xl">
           Marissa McDonnell

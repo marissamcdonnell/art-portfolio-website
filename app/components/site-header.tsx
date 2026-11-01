@@ -10,6 +10,7 @@ const navLinks = [
   { href: "/", label: "Home" },
   { href: "/oil-paintings", label: "Oil Paintings" },
   { href: "/other-arts", label: "Other Arts" },
+  { href: "/engineering", label: "Engineering" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ]
