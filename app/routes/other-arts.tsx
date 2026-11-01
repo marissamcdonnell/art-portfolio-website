@@ -1,63 +1,41 @@
 import type { Route } from "./+types/other-arts"
-import { getArtworksByCategory } from "~/lib/artworks"
-import { Gallery } from "~/components/gallery"
-import { seoMeta, SITE_URL, SITE_NAME } from "~/lib/seo"
+import { OTHER_ARTS_LABELS, COLLECTION_LABELS } from "~/art/art.strings"
+import { CollectionPage } from "~/art/CollectionPage"
+import { collectionJsonLd } from "~/art/utils/collectionJsonLd"
+import { getArtworksByCategory } from "~/art/utils/getArtworksByCategory"
+import { seoMeta } from "~/site/seo"
+import { SITE_NAME } from "~/site/site.consts"
+
+const PATH = "/other-arts"
 
 export const meta: Route.MetaFunction = ({ data }) => {
-  const firstImage = data?.artworks?.[0]?.blobUrl
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    name: "Other Arts — Marissa McDonnell",
-    description: `Watercolor, charcoal, and mixed media works by ${SITE_NAME}`,
-    url: `${SITE_URL}/other-arts`,
-    author: {
-      "@type": "Person",
-      name: SITE_NAME,
-      url: SITE_URL,
-    },
-    hasPart: (data?.artworks ?? []).map((a) => ({
-      "@type": "VisualArtwork",
-      name: a.title,
-      artMedium: a.medium,
-      dateCreated: String(a.year),
-      image: a.blobUrl,
-      creator: { "@type": "Person", name: SITE_NAME },
-    })),
-  }
-
+  const artworks = data?.artworks ?? []
   return [
     ...seoMeta({
-      title: "Other Arts",
-      description: "Watercolor, charcoal, mixed media, and more — works on paper and beyond by Marissa McDonnell.",
-      image: firstImage,
-      path: "/other-arts",
+      title: OTHER_ARTS_LABELS.title,
+      description: OTHER_ARTS_LABELS.metaDescription,
+      image: artworks[0]?.blobUrl,
+      path: PATH,
     }),
-    { "script:ld+json": jsonLd },
+    {
+      "script:ld+json": collectionJsonLd({
+        name: OTHER_ARTS_LABELS.title,
+        description: OTHER_ARTS_LABELS.jsonLdDescription(SITE_NAME),
+        path: PATH,
+        artworks,
+      }),
+    },
   ]
 }
 
-export function loader() {
-  const artworks = getArtworksByCategory("other")
-  return { artworks }
-}
+export const loader = () => ({ artworks: getArtworksByCategory("other") })
 
-export default function OtherArts({ loaderData }: Route.ComponentProps) {
-  const { artworks } = loaderData
+const OtherArts = ({ loaderData }: Route.ComponentProps) => (
+  <CollectionPage
+    title={OTHER_ARTS_LABELS.title}
+    subtitle={OTHER_ARTS_LABELS.subtitle(COLLECTION_LABELS.workCount(loaderData.artworks.length))}
+    artworks={loaderData.artworks}
+  />
+)
 
-  return (
-    <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-      <div className="mb-12">
-        <p className="mb-2 text-xs font-medium uppercase tracking-widest text-muted-foreground">
-          Portfolio
-        </p>
-        <h1 className="text-4xl font-bold tracking-tight">Other Arts</h1>
-        <p className="mt-3 text-muted-foreground">
-          Watercolor, charcoal, mixed media, and more —{" "}
-          {artworks.length} work{artworks.length !== 1 ? "s" : ""}
-        </p>
-      </div>
-      <Gallery artworks={artworks} />
-    </div>
-  )
-}
+export default OtherArts

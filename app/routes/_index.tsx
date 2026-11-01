@@ -1,131 +1,40 @@
-import { Link } from "react-router"
 import type { Route } from "./+types/_index"
-import { getFeaturedArtworks } from "~/lib/artworks"
-import { ArtImage } from "~/components/art-image"
-import { Button } from "~/components/ui/button"
-import { ArrowRight } from "lucide-react"
-import { seoMeta, SITE_URL, SITE_NAME } from "~/lib/seo"
+import { getFeaturedArtworks } from "~/art/utils/getFeaturedArtworks"
+import { CommissionCta } from "~/home/CommissionCta"
+import { FeaturedWork } from "~/home/FeaturedWork"
+import { Hero } from "~/home/Hero"
+import { HOME_LABELS } from "~/home/home.strings"
+import { seoMeta } from "~/site/seo"
+import { INSTAGRAM_URL, SITE_NAME, SITE_URL } from "~/site/site.consts"
 
-export const meta: Route.MetaFunction = ({ data }) => {
-  const firstImage = data?.featured?.[0]?.blobUrl
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: SITE_NAME,
-    url: SITE_URL,
-    jobTitle: ["Artist", "Software Engineer"],
-    description: "Oil painter and mixed-media artist.",
-    sameAs: [
-      "https://www.instagram.com/",
-    ],
-  }
+export const meta: Route.MetaFunction = ({ data }) => [
+  ...seoMeta({
+    title: HOME_LABELS.metaTitle,
+    description: HOME_LABELS.metaDescription,
+    image: data?.featured?.[0]?.blobUrl,
+    path: "/",
+  }),
+  {
+    "script:ld+json": {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      name: SITE_NAME,
+      url: SITE_URL,
+      jobTitle: ["Artist", "Software Engineer"],
+      description: HOME_LABELS.jsonLdDescription,
+      sameAs: [INSTAGRAM_URL],
+    },
+  },
+]
 
-  return [
-    ...seoMeta({
-      title: "Marissa McDonnell — Artist and Software Engineer",
-      description:
-        "Oil painter and mixed-media artist. Expressive, layered work exploring color, light, and the quiet in-between.",
-      image: firstImage,
-      path: "/",
-    }),
-    { "script:ld+json": jsonLd },
-  ]
-}
+export const loader = () => ({ featured: getFeaturedArtworks(3) })
 
-export function loader() {
-  const featured = getFeaturedArtworks(3)
-  return { featured }
-}
+const Home = ({ loaderData }: Route.ComponentProps) => (
+  <div>
+    <Hero />
+    <FeaturedWork artworks={loaderData.featured} />
+    <CommissionCta />
+  </div>
+)
 
-export default function Home({ loaderData }: Route.ComponentProps) {
-  const { featured } = loaderData
-
-  return (
-    <div>
-      {/* Hero */}
-      <section className="relative flex min-h-[70vh] flex-col items-center justify-center overflow-hidden px-4 py-24 text-center sm:px-6">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-muted/40 via-background to-background" />
-        <p className="mb-4 text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">
-          Artist & Software Engineer
-        </p>
-        <h1 className="mb-6 max-w-3xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl md:text-6xl">
-          Marissa McDonnell
-        </h1>
-        <p className="mb-10 max-w-xl text-lg text-muted-foreground">
-          Oil paintings and mixed media — expressive, layered work that explores
-          color, light, and the quiet in-between.
-        </p>
-        <div className="flex flex-wrap justify-center gap-4">
-          <Button asChild size="lg">
-            <Link to="/oil-paintings">
-              View Oil Paintings
-              <ArrowRight className="ml-2 size-4" />
-            </Link>
-          </Button>
-          <Button asChild variant="outline" size="lg">
-            <Link to="/about">About Me</Link>
-          </Button>
-        </div>
-      </section>
-
-      {/* Featured Work */}
-      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        <div className="mb-10 flex items-end justify-between">
-          <div>
-            <p className="mb-1 text-xs font-medium uppercase tracking-widest text-muted-foreground">
-              Recent Work
-            </p>
-            <h2 className="text-2xl font-semibold tracking-tight">Featured Paintings</h2>
-          </div>
-          <Button asChild variant="ghost" size="sm">
-            <Link to="/oil-paintings">
-              View all
-              <ArrowRight className="ml-1.5 size-3.5" />
-            </Link>
-          </Button>
-        </div>
-
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((artwork, i) => (
-            <Link
-              key={artwork.id}
-              to="/oil-paintings"
-              className="group overflow-hidden rounded-xl border border-border/50 transition-all hover:border-border hover:shadow-lg"
-            >
-              <ArtImage
-                src={artwork.blobUrl}
-                alt={artwork.alt}
-                width={artwork.width}
-                height={artwork.height}
-                priority={i === 0}
-                className="aspect-[4/5] rounded-t-xl"
-              />
-              <div className="p-4">
-                <p className="font-medium text-foreground">{artwork.title}</p>
-                <p className="mt-0.5 text-sm text-muted-foreground">
-                  {artwork.medium} · {artwork.year}
-                </p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* CTA band */}
-      <section className="border-t border-border/40 bg-muted/30 px-4 py-16 sm:px-6">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="mb-4 text-2xl font-semibold tracking-tight">
-            Interested in a piece?
-          </h2>
-          <p className="mb-8 text-muted-foreground">
-            I take commissions and occasionally sell originals. Reach out and
-            let's talk.
-          </p>
-          <Button asChild size="lg">
-            <Link to="/contact">Get in Touch</Link>
-          </Button>
-        </div>
-      </section>
-    </div>
-  )
-}
+export default Home

@@ -1,7 +1,7 @@
 import type { Route } from "./+types/robots[.txt]"
-import { SITE_URL } from "~/lib/seo"
+import { SITE_URL } from "~/site/site.consts"
 
-export function loader(_: Route.LoaderArgs) {
+export const loader = (_: Route.LoaderArgs) => {
   const content = `User-agent: *
 Allow: /
 

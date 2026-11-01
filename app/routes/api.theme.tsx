@@ -1,8 +1,8 @@
 import { data, redirect } from "react-router"
 import type { Route } from "./+types/api.theme"
-import { setTheme, type Theme } from "~/lib/theme.server"
+import { setTheme, type Theme } from "~/site/theme.server"
 
-export async function action({ request }: Route.ActionArgs) {
+export const action = async ({ request }: Route.ActionArgs) => {
   const formData = await request.formData()
   const theme = formData.get("theme") as Theme
 
