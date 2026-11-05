@@ -1,16 +1,17 @@
 import type { Route } from "./+types/sitemap[.xml]"
-import { artworks } from "~/lib/artworks"
-import { SITE_URL } from "~/lib/seo"
+import { artworks } from "~/art/artworks"
+import { SITE_URL } from "~/site/site.consts"
 
 const STATIC_ROUTES = [
   { path: "/", priority: "1.0", changefreq: "weekly" },
   { path: "/oil-paintings", priority: "0.9", changefreq: "weekly" },
   { path: "/other-arts", priority: "0.9", changefreq: "weekly" },
+  { path: "/engineering", priority: "0.8", changefreq: "monthly" },
   { path: "/about", priority: "0.7", changefreq: "monthly" },
   { path: "/contact", priority: "0.6", changefreq: "yearly" },
 ]
 
-function xmlEscape(str: string) {
+const xmlEscape = (str: string) => {
   return str
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -18,7 +19,7 @@ function xmlEscape(str: string) {
     .replace(/"/g, "&quot;")
 }
 
-export function loader({ request }: Route.LoaderArgs) {
+export const loader = ({ request }: Route.LoaderArgs) => {
   const today = new Date().toISOString().split("T")[0]
 
   const urls = STATIC_ROUTES.map(

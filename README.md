@@ -9,12 +9,16 @@ pnpm install
 pnpm dev         # http://localhost:5173
 ```
 
+## Code layout
+
+Thin routes in `app/routes`, one feature folder per page (`art/`, `home/`, `about/`, `contact/`, `engineering/`), the app shell in `layout/`, site config in `site/`, and reusable components in `library/`. The rules live in `CLAUDE.md`.
+
 ## Add new art
 
 1. Drop original photos (any format/size) into `./images-source/oil-paintings/` or `./images-source/other-arts/`
 2. Make sure `BLOB_READ_WRITE_TOKEN` is in your `.env`
 3. Run `pnpm art:upload` — it compresses, uploads, and prints metadata
-4. Paste the output into `app/lib/artworks.ts`
+4. Paste the output into `app/art/artworks.ts`
 5. `git push` — Vercel redeploys automatically
 
 ## Environment variables

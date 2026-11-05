@@ -1,25 +1,19 @@
-import {
-  isRouteErrorResponse,
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  data,
-  useRouteLoaderData,
-} from "react-router"
+import type { ReactNode } from "react"
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, data, useRouteLoaderData } from "react-router"
 import type { Route } from "./+types/root"
 import stylesheet from "~/app.css?url"
-import { getTheme } from "~/lib/theme.server"
-import { SiteHeader } from "~/components/site-header"
-import { SITE_NAME, SITE_URL, DEFAULT_DESCRIPTION } from "~/lib/seo"
+import { RouteError } from "~/layout/RouteError"
+import { SiteFooter } from "~/layout/SiteFooter"
+import { SiteHeader } from "~/layout/SiteHeader"
+import { SITE_NAME } from "~/site/site.consts"
+import { getTheme } from "~/site/theme.server"
 
 export const meta: Route.MetaFunction = () => [
   { charSet: "utf-8" },
   { name: "viewport", content: "width=device-width, initial-scale=1" },
   { property: "og:site_name", content: SITE_NAME },
   { name: "author", content: SITE_NAME },
-  // Remove this once your real paintings and bio are fully in place.
+  // Remove once the real bio is in place.
   { name: "robots", content: "noindex, nofollow" },
 ]
 
@@ -37,12 +31,12 @@ export const links: Route.LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ]
 
-export async function loader({ request }: Route.LoaderArgs) {
+export const loader = async ({ request }: Route.LoaderArgs) => {
   const theme = await getTheme(request)
   return data({ theme })
 }
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export const Layout = ({ children }: { children: ReactNode }) => {
   const loaderData = useRouteLoaderData<typeof loader>("root")
   const theme = loaderData?.theme ?? "dark"
 
@@ -65,7 +59,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   )
 }
 
-export default function App() {
+const App = () => {
   const { theme } = useRouteLoaderData<typeof loader>("root")!
 
   return (
@@ -74,54 +68,11 @@ export default function App() {
       <main className="flex-1">
         <Outlet />
       </main>
-      <footer className="border-t border-border/40 py-8">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-            <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Marissa McDonnell. All rights reserved.
-            </p>
-            <div className="flex gap-4 text-sm text-muted-foreground">
-              <a
-                href="https://www.instagram.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-foreground transition-colors"
-              >
-                Instagram
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   )
 }
 
-export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let message = "Oops!"
-  let details = "An unexpected error occurred."
-  let stack: string | undefined
+export default App
 
-  if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? "404" : "Error"
-    details =
-      error.status === 404
-        ? "The page you're looking for doesn't exist."
-        : error.statusText || details
-  } else if (import.meta.env.DEV && error && error instanceof Error) {
-    details = error.message
-    stack = error.stack
-  }
-
-  return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-8 text-center">
-      <h1 className="mb-4 text-4xl font-bold">{message}</h1>
-      <p className="mb-8 text-muted-foreground">{details}</p>
-      {stack && (
-        <pre className="w-full max-w-2xl overflow-x-auto rounded-lg bg-muted p-4 text-left text-xs">
-          <code>{stack}</code>
-        </pre>
-      )}
-    </div>
-  )
-}
+export const ErrorBoundary = ({ error }: Route.ErrorBoundaryProps) => <RouteError error={error} />

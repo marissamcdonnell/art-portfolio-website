@@ -153,7 +153,7 @@ async function main() {
   await import("fs").then((fs) => fs.rmSync(tmpDir, { recursive: true, force: true }))
 
   if (snippets.length) {
-    console.log("\n\n━━━ Paste these into app/lib/artworks.ts ━━━\n")
+    console.log("\n\n━━━ Paste these into app/art/artworks.ts ━━━\n")
     console.log(snippets.join("\n"))
     console.log("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n")
   }
